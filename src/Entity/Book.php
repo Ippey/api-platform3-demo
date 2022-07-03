@@ -6,14 +6,25 @@ use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Link;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Delete;
-use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Put;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\ApiResource;
+use App\Dto\BookDto;
+use App\Processor\BookProcessor;
 use App\Repository\BookRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
+#[ApiResource(
+    operations: [
+        new Post(
+            uriTemplate: '/books',
+            input: BookDto::class,
+            processor: BookProcessor::class,
+        ),
+        new Put(),
+    ],
+)]
 #[ApiResource]
 #[ApiResource(
     uriTemplate: '/authors/{authorId}/books',
@@ -30,7 +41,7 @@ class Book
     private $id;
 
     #[ORM\Column(type: 'string', length: 255)]
-    #[Groups(['author'])]
+    #[Groups(['author', 'post'])]
     private $title;
 
     #[ORM\Column(type: 'boolean')]
@@ -38,11 +49,12 @@ class Book
     private $isPublished;
 
     #[ORM\Column(type: 'integer')]
-    #[Groups(['author'])]
+    #[Groups(['author', 'post'])]
     private $price;
 
     #[ORM\ManyToOne(targetEntity: Author::class, inversedBy: 'books')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['post'])]
     private $author;
     public function getId() : ?int
     {

@@ -1,13 +1,13 @@
 {
     "type": "project",
     "license": "proprietary",
-    "minimum-stability": "stable",
+    "minimum-stability": "beta",
     "prefer-stable": true,
     "require": {
         "php": ">=8.0.2",
         "ext-ctype": "*",
         "ext-iconv": "*",
-        "api-platform/core": "^2.6",
+        "api-platform/core": "^2.7",
         "doctrine/annotations": "^1.0",
         "doctrine/doctrine-bundle": "^2.7",
         "doctrine/doctrine-migrations-bundle": "^3.2",
